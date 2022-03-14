@@ -1,4 +1,6 @@
 const express = require('express')
+// 引入数据库连接
+require('./db/connect')
 
 const app = express()
 
