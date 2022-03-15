@@ -6,13 +6,13 @@
       <el-table-column prop="password" label="密码" />
       <el-table-column prop="isAdmin" label="是否管理员">
         <template slot-scope="scope">
-          {{ scope.row.isAdmin === true ? '是' : '否' }}
+          {{ scope.row.isAdmin === true ? "是" : "否" }}
         </template>
       </el-table-column>
     </el-table>
 
-      <Pagination
-      v-show="total>0"
+    <Pagination
+      v-show="total > 0"
       :total="total"
       :page.sync="queryParams.pagenum"
       :limit.sync="queryParams.pagesize"
@@ -29,7 +29,7 @@ export default {
   data() {
     return {
       userList: [],
-      total:0,
+      total: 0,
       queryParams: {
         pagenum: 1,
         pagesize: 2,
@@ -42,9 +42,8 @@ export default {
   methods: {
     getInit() {
       getUsers(this.queryParams).then((res) => {
-        console.log("获取信息", res);
-        this.userList = res.data.records 
-        this.total = res.data.total
+        this.userList = res.data.records;
+        this.total = res.data.total;
       });
     },
   },
