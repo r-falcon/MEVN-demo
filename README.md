@@ -6,6 +6,8 @@
 
 `npm init webpack vue-demo`，搭建 vue 项目，vue-demo 为项目名称
 
+### 修改框架，完成登录注册逻辑，路由导航守卫、动态菜单、统一接口封装等问题
+
 ### 启动项目
 
 `cd vue-demo`
@@ -48,3 +50,7 @@ mongoose
   .then(() => console.log('数据库连接成功'))
   .catch((err) => console.log('数据库连接失败', err))
 ```
+
+### 设置跨域、jwt 用户安全校验等一系列准备工作
+
+### 完成用户登录注册的逻辑

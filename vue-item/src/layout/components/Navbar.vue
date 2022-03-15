@@ -27,13 +27,13 @@
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar" class="user-avatar">
+          <img :src="require('@/assets/images/profile.jpg')" class="user-avatar">
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown">
-          <router-link to="/user/profile">
+          <!-- <router-link to="/user/profile">
             <el-dropdown-item>个人中心</el-dropdown-item>
-          </router-link>
+          </router-link> -->
           <el-dropdown-item @click.native="setting = true">
             <span>布局设置</span>
           </el-dropdown-item>
@@ -71,7 +71,6 @@ export default {
   computed: {
     ...mapGetters([
       'sidebar',
-      'avatar',
       'device'
     ]),
     setting: {

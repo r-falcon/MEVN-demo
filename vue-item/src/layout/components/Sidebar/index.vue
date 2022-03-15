@@ -12,8 +12,14 @@
                 :collapse-transition="false"
                 mode="vertical"
             >
-                <sidebar-item
+                <!-- <sidebar-item
                     v-for="(route, index) in sidebarRouters"
+                    :key="route.path  + index"
+                    :item="route"
+                    :base-path="route.path"
+                /> -->
+                 <sidebar-item
+                    v-for="(route, index) in permission_routes"
                     :key="route.path  + index"
                     :item="route"
                     :base-path="route.path"
@@ -33,7 +39,8 @@ export default {
     components: { SidebarItem, Logo },
     computed: {
         ...mapState(["settings"]),
-        ...mapGetters(["sidebarRouters", "sidebar"]),
+        // ...mapGetters(["sidebarRouters", "sidebar"]),
+        ...mapGetters(["permission_routes", "sidebar"]),
         activeMenu() {
             const route = this.$route;
             const { meta, path } = route;
