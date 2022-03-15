@@ -63,17 +63,6 @@ const permission = {
                     icon: null,
                   },
                 },
-                {
-                  name: "Comment",
-                  path: "/system/comment",
-                  redirect: null,
-                  component: "system/comment/index",
-                  hidden: false,
-                  meta: {
-                    title: "评论管理",
-                    icon: null,
-                  },
-                },
               ],
             },
           ],
