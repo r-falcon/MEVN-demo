@@ -4,6 +4,8 @@
       <el-button type="primary" size="mini" @click="handleAdd">添加</el-button>
     </div>
 
+    <div>learn more for you</div>
+
     <el-table :data="contentList">
       <el-table-column label="序号" type="index" width="50" />
       <el-table-column prop="name" label="分类名称">
