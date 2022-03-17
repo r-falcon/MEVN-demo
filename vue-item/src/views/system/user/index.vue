@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-table :data="userList">
-      <el-table-column type="index" width="50" />
+      <el-table-column label="序号" type="index" width="50" />
       <el-table-column prop="username" label="用户名" />
       <el-table-column prop="password" label="密码" />
       <el-table-column prop="isAdmin" label="是否管理员">

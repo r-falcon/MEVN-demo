@@ -5,14 +5,11 @@
     </div>
 
     <el-table :data="sortList">
-      <el-table-column type="index" width="50" />
+      <el-table-column label="序号" type="index" width="50" />
       <el-table-column prop="name" label="分类名称" />
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button
-            type="primary"
-            size="mini"
-            @click="handleUpdate(scope.row)"
+          <el-button type="primary" size="mini" @click="handleUpdate(scope.row)"
             >修改</el-button
           >
           <el-button
@@ -53,7 +50,7 @@
 </template>
 
 <script>
-import { getSorts,sortAdd,sortEdit,sortDelete } from "@/api/system/sort";
+import { getSorts, sortAdd, sortEdit, sortDelete } from "@/api/system/sort";
 
 export default {
   name: "Sort",
@@ -82,10 +79,12 @@ export default {
   },
   methods: {
     getInit() {
-      getSorts(this.queryParams).then((res) => {
-        this.sortList = res.data.records;
-        this.total = res.data.total;
-      });
+      getSorts(this.queryParams)
+        .then((res) => {
+          this.sortList = res.data.records;
+          this.total = res.data.total;
+        })
+        .catch((err) => console.log(err));
     },
 
     handleAdd() {
@@ -94,29 +93,37 @@ export default {
     },
 
     handleUpdate(record) {
-      this.isAdd = false 
-      this.dialogVisible = true
-      this.form = record
+      this.isAdd = false;
+      this.dialogVisible = true;
+      this.form = record;
     },
 
     handleSubmit() {
-      this.$refs.form.validate(valid => {
-        if(valid){
-          if(this.isAdd){
-            sortAdd(this.form).then(res => {
-               this.$message.success(res.message)
-               this.reset()
-               this.getInit()
-            })
-          }else{
-            sortEdit(this.form).then(res => {
-              this.$message.success(res.message)
-              this.reset()
-              this.getInit()
-            })
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+          if (this.isAdd) {
+            sortAdd(this.form)
+              .then((res) => {
+                this.$message.success(res.message);
+                this.reset();
+              })
+              .catch((err) => {
+                console.log(err);
+                this.reset();
+              });
+          } else {
+            sortEdit(this.form)
+              .then((res) => {
+                this.$message.success(res.message);
+                this.reset();
+              })
+              .catch((err) => {
+                console.log(err);
+                this.reset();
+              });
           }
         }
-      })
+      });
     },
 
     handleClose() {
@@ -126,23 +133,26 @@ export default {
     reset() {
       this.isAdd = false;
       this.dialogVisible = false;
-      this.$refs.form.resetFields()
+      this.$refs.form.resetFields();
+      this.getInit();
     },
 
     handleDelete(id) {
-      this.$confirm('删除后不可恢复，确定要删除吗？', '删除', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        customClass: 'delete_icon',
-        dangerouslyUseHTMLString: true
-      }).then(() => {
-        sortDelete({id:id}).then(res => {
-          this.$message.success(res.message)
-          this.getInit()
-        })
-      }).catch((err) => {
-        this.$message.error(err)
+      this.$confirm("删除后不可恢复，确定要删除吗？", "删除", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        customClass: "delete_icon",
+        dangerouslyUseHTMLString: true,
       })
+        .then(() => {
+          sortDelete({ id: id }).then((res) => {
+            this.$message.success(res.message);
+            this.getInit();
+          });
+        })
+        .catch((err) => {
+          this.$message.error(err);
+        });
     },
   },
 };

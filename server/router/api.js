@@ -23,7 +23,9 @@ router.post('/register', (req, res) => {
     isAdmin: req.body.isAdmin,
   }
 
-  User.findOne({ username: newUser.username }).then((userInfo) => {
+  User.findOne({
+    username: newUser.username,
+  }).then((userInfo) => {
     if (userInfo) {
       return res.sendResult(null, 1, '该用户已存在')
     }
@@ -47,7 +49,9 @@ router.post('/login', (req, res) => {
   var username = req.body.username
   var password = req.body.password
 
-  User.findOne({ username: username }).then((user) => {
+  User.findOne({
+    username: username,
+  }).then((user) => {
     if (!user) {
       return res.sendResult(null, 1, '用户不存在')
     }
@@ -69,14 +73,24 @@ router.post('/login', (req, res) => {
           password: user.password,
           nowDate: nowDate,
         }
-        jwt.sign(rule, 'secret', { expiresIn: 60 * 60 * 24 }, (err, token) => {
-          if (err) throw err
-          return res.sendResult(
-            { token: 'Bearer ' + token, user: user },
-            0,
-            '登录成功'
-          )
-        })
+        jwt.sign(
+          rule,
+          'secret',
+          {
+            expiresIn: 60 * 60 * 24,
+          },
+          (err, token) => {
+            if (err) throw err
+            return res.sendResult(
+              {
+                token: 'Bearer ' + token,
+                user: user,
+              },
+              0,
+              '登录成功'
+            )
+          }
+        )
       } else {
         return res.sendResult(null, 1, '密码错误')
       }

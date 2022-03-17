@@ -1,6 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const passport = require('passport')
+const cookieParser = require('cookie-parser')
 // 引入数据库连接
 require('./db/connect')
 
@@ -17,6 +18,9 @@ app.all('*', (req, res, next) => {
 // bodyParser
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
+
+// cookieParser
+app.use(cookieParser())
 
 // 统一返回响应机制
 var resForm = require('./modules/resForm')
