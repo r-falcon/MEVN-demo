@@ -27,7 +27,8 @@ const permission = {
               component: "Layout",
               meta: {
                 title: "系统维护",
-                icon: "list",
+                icon: "nested",
+                roles: ["admin"],
               },
               children: [
                 {
@@ -57,6 +58,98 @@ const permission = {
                   path: "/system/content",
                   redirect: null,
                   component: "system/content/index",
+                  hidden: false,
+                  meta: {
+                    title: "内容管理",
+                    icon: null,
+                  },
+                },
+              ],
+            },
+            {
+              name: "Fresh",
+              path: "/fresh",
+              redirect: null,
+              component: "Layout",
+              meta: {
+                title: "生鲜管理",
+                icon: "form",
+                roles: ["admin", "normal"],
+              },
+              children: [
+                {
+                  name: "Purchase",
+                  path: "/fresh/purchase",
+                  redirect: null,
+                  component: "purchase/index",
+                  hidden: false,
+                  meta: {
+                    title: "采购管理",
+                    icon: null,
+                  },
+                },
+                {
+                  name: "Stock",
+                  path: "/fresh/stock",
+                  redirect: null,
+                  component: "stock/index",
+                  hidden: false,
+                  meta: {
+                    title: "库存管理",
+                    icon: null,
+                  },
+                },
+                {
+                  name: "Order",
+                  path: "/fresh/order",
+                  redirect: null,
+                  component: "order/index",
+                  hidden: false,
+                  meta: {
+                    title: "订单管理",
+                    icon: null,
+                  },
+                },
+                {
+                  name: "Analysis",
+                  path: "/fresh/analysis",
+                  redirect: null,
+                  component: "analysis/index",
+                  hidden: false,
+                  meta: {
+                    title: "统计分析",
+                    icon: null,
+                  },
+                },
+              ],
+            },
+            {
+              name: "Article",
+              path: "/article",
+              redirect: null,
+              component: "Layout",
+              meta: {
+                title: "文章管理",
+                icon: "list",
+                roles: ["admin", "normal"],
+              },
+              children: [
+                {
+                  name: "Sort",
+                  path: "/article/sort",
+                  redirect: null,
+                  component: "sort/index",
+                  hidden: false,
+                  meta: {
+                    title: "分类管理",
+                    icon: null,
+                  },
+                },
+                {
+                  name: "Content",
+                  path: "/article/content",
+                  redirect: null,
+                  component: "content/index",
                   hidden: false,
                   meta: {
                     title: "内容管理",

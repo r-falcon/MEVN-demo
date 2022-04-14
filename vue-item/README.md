@@ -28,3 +28,17 @@ npm run build:stage
 # 构建生产环境
 npm run build:prod
 ```
+
+## 本网站支持的账号
+
+username:admin(admin)
+password:123456
+
+username:falcon(admin)
+password:123456
+
+username:alice
+password:123456
+
+username:jerry
+password:123456
