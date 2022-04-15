@@ -9,9 +9,9 @@ const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const passport = require('passport')
 
 const User = require('../models/User')
+// const Menu = require('../models/Menu')
 
 /**
  * 用户注册
@@ -97,5 +97,80 @@ router.post('/login', (req, res) => {
     })
   })
 })
+
+/**
+ * 获取用户信息列表
+ */
+router.get('/getUsers', (req, res) => {
+  var page = req.query.pagenum || 1
+  var limit = req.query.pagesize || 999
+
+  User.count().then((count) => {
+    var pages = Math.ceil(count / limit)
+    page = Math.max(page, 1)
+    var skip = (page - 1) * limit
+
+    User.find()
+      .limit(limit)
+      .skip(skip)
+      .then((userList) => {
+        res.sendResult(
+          0,
+          { records: userList, total: count },
+          0,
+          '获取用户列表成功'
+        )
+      })
+  })
+  // var userId = req.query.userId || ''
+  // if (userId == '') {
+  //   return res.sendResult(null, 1, '请传递必要的参数')
+  // }
+  // Info.find()
+  //   .populate('user')
+  //   .then((userInfo) => {
+  //     let info = {}
+  //     userInfo.filter((item) => {
+  //       if (item.user._id.toString() == userId) {
+  //         info = item
+  //         return
+  //       }
+  //     })
+  //     res.sendResult(info, 0, '获取用户详情成功')
+  //   })
+})
+
+/**
+ * 查询分类列表详情
+ */
+router.get('/getUsersById', (req, res) => {
+  var userId = req.query.userId || ''
+  if (userId == '') {
+    return res.sendResult(null, 1, '请传递必要的参数')
+  }
+  User.findOne({ _id: userId }).then((userInfo) => {
+    res.sendResult(userInfo, 0, '获取用户详情成功')
+  })
+})
+
+/**
+ * 获取动态路由
+ */
+// router.get('/getMenus', (req, res) => {
+//   Menu.find().then((menuList) => {
+//     if (menuList.length > 0) {
+//       User.findOne({ username: req.cookies.username }).then((res) => {
+//         let list = []
+//         let key = res.isAdmin ? 'admin' : 'normal'
+//         menuList = JSON.parse(JSON.stringify(menuList))
+//         menuList.map((item) => {
+//           item.meta.roles.includes(key) ? list.push(item) : null
+//         })
+//         menuList = list
+//       })
+//     }
+//     res.sendResult(menuList, 0, '获取动态路由成功')
+//   })
+// })
 
 module.exports = router

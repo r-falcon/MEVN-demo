@@ -54,7 +54,9 @@
 - nickname
 - password
 - email
-- role（管理员 admin、普通用户 normal）
+- phone
+- isAdmin
+<!-- - role（管理员 admin、普通用户 normal） -->
 - enable
 - avatar
 - 分配菜单
@@ -76,7 +78,8 @@
 - id
 - name
 - icon
-- isShow
+- hidden
+- role
 - component
 - path
 - sort
