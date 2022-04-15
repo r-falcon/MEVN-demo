@@ -1,5 +1,11 @@
 import { login } from "@/api/login";
-import { getToken, setToken, removeToken, setUser } from "@/utils/auth";
+import {
+  getToken,
+  setToken,
+  removeToken,
+  setUser,
+  removeUser,
+} from "@/utils/auth";
 
 const user = {
   state: {
@@ -31,9 +37,10 @@ const user = {
         login(userInfo)
           .then((res) => {
             setToken(res.data.token);
-            setUser(res.data.user._id);
+            setUser(res.data.user);
             commit("SET_TOKEN", res.data.token);
             commit("SET_USER", res.data.user);
+            localStorage.setItem("isAdmin", res.data.user.isAdmin);
             resolve();
           })
           .catch((err) => reject(err));
@@ -43,18 +50,15 @@ const user = {
     // 获取用户信息
     GetInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
-        const res = {
-          roles: ["admin"],
-          permissions: ["create", "retrieve", "update", "delete"],
-        };
-
-        if (res.roles && res.roles.length > 0) {
-          commit("SET_ROLES", res.roles);
-          commit("SET_PERMISSIONS", res.permissions);
+        console.log(localStorage.getItem("isAdmin"));
+        if (localStorage.getItem("isAdmin")) {
+          localStorage.setItem("role", ["admin"]);
+          commit("SET_ROLES", ["admin"]);
         } else {
-          commit("SET_ROLES", ["ROLE_DEFAULT"]);
+          localStorage.setItem("role", ["normal"]);
+          commit("SET_ROLES", ["normal"]);
         }
-        resolve(res);
+        resolve(state.user);
       });
     },
 
@@ -64,6 +68,8 @@ const user = {
         commit("SET_TOKEN", "");
         commit("SET_USER", {});
         removeToken();
+        removeUser();
+        localStorage.clear();
         resolve();
       });
     },

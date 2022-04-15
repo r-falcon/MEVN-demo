@@ -14,6 +14,10 @@ export function removeToken() {
   return Cookies.remove(TokenKey);
 }
 
-export function setUser(id) {
-  return Cookies.set("user", id);
+export function setUser(user) {
+  return Cookies.set("user", user);
+}
+
+export function removeUser() {
+  return Cookies.remove("user");
 }

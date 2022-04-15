@@ -1,9 +1,12 @@
 import request from "@/utils/request";
 
-export function getUsers(data) {
+/**
+ * 获取用户信息
+ */
+export function getUserList(params) {
   return request({
-    url: "/admin/userList",
+    url: "/system/userList",
     method: "get",
-    params: data,
+    params: params,
   });
 }

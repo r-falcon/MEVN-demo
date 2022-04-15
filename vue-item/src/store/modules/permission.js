@@ -1,5 +1,6 @@
 import { constantRoutes } from "@/router";
 import Layout from "@/layout/index";
+import store from "@/store";
 
 const permission = {
   state: {
@@ -43,24 +44,24 @@ const permission = {
                   },
                 },
                 {
-                  name: "Sort",
-                  path: "/system/sort",
+                  name: "Role",
+                  path: "/system/role",
                   redirect: null,
-                  component: "system/sort/index",
+                  component: "system/role/index",
                   hidden: false,
                   meta: {
-                    title: "分类管理",
+                    title: "角色管理",
                     icon: null,
                   },
                 },
                 {
-                  name: "Content",
-                  path: "/system/content",
+                  name: "Menu",
+                  path: "/system/menu",
                   redirect: null,
-                  component: "system/content/index",
+                  component: "system/menu/index",
                   hidden: false,
                   meta: {
-                    title: "内容管理",
+                    title: "菜单管理",
                     icon: null,
                   },
                 },
@@ -160,7 +161,20 @@ const permission = {
             },
           ],
         };
-
+        /**
+         * 权限校验开始
+         */
+        let key = localStorage.getItem("role");
+        let list = [];
+        console.log("key", key);
+        res.data &&
+          res.data.forEach((item) =>
+            item.meta.roles.includes(key) ? list.push(item) : null
+          );
+        res.data = list;
+        /**
+         * 权限校验结束
+         */
         const accessedRoutes = filterAsyncRouter(res.data);
         accessedRoutes.push({
           path: "*",
