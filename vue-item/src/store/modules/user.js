@@ -50,8 +50,7 @@ const user = {
     // 获取用户信息
     GetInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
-        console.log(localStorage.getItem("isAdmin"));
-        if (localStorage.getItem("isAdmin")) {
+        if (localStorage.getItem("isAdmin") == 'true') {
           localStorage.setItem("role", ["admin"]);
           commit("SET_ROLES", ["admin"]);
         } else {
@@ -67,6 +66,7 @@ const user = {
       return new Promise((resolve) => {
         commit("SET_TOKEN", "");
         commit("SET_USER", {});
+        commit("SET_ROLES", []);
         removeToken();
         removeUser();
         localStorage.clear();

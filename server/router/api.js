@@ -55,6 +55,10 @@ router.post('/login', (req, res) => {
       return res.sendResult(null, 1, '用户不存在')
     }
 
+    if(!user.enable){
+      return res.sendResult(null,1,'该用户未启用')
+    }
+
     // 当前时间
     let date = new Date()
     let year = date.getFullYear()

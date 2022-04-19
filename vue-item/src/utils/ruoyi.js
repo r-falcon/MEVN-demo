@@ -234,3 +234,57 @@ export async function blobValidate(data) {
     return true;
   }
 }
+
+/**
+ * 账号校验 
+ */
+ export function checkAccount(str) {
+  //  6-20位，仅限英文、数字和下划线
+  const reg = /^[0-9_a-zA-Z]{6,20}$/
+  return reg.test(str)
+}
+
+/**
+ * 密码校验
+ */
+export function checkPwd(str){
+   // 6-20位 大小写字母和数字
+   const reg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[A-Za-z0-9]{6,20}$/
+   return reg.test(str) 
+}
+
+/**
+ * 手机号校验
+ */
+ export function checkPhone(str) {
+  const reg = /^1(3[0-9]|4[01456879]|5[0-35-9]|6[2567]|7[0-8]|8[0-9]|9[0-35-9])\d{8}$/
+  return reg.test(str)
+}
+
+/**
+ * 邮箱校验
+ */
+ export function checkEmail(str) {
+  const reg = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/
+  return reg.test(str)
+}
+
+/**
+ * 判断是否为空
+ */
+ export function validatenull(val) {
+  if (typeof val === 'boolean') {
+    return false
+  }
+  if (val instanceof Array) {
+    if (val.length === 0) return true
+  } else if (val instanceof Object) {
+    if (JSON.stringify(val) === '{}') return true
+  } else {
+    if (val === 'null' || val == null || val === 'undefined' || val === undefined || val === '') return true
+    return false
+  }
+  return false
+}
+
+
