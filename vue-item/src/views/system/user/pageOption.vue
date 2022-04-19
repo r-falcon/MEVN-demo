@@ -12,6 +12,9 @@
       <el-form-item v-if="isAdd" label="密码" prop="password">
         <el-input v-model="form.password" type="password" />
       </el-form-item>
+      <el-form-item v-if="isAdd" label="重复密码" prop="password1">
+        <el-input v-model="form.password1" type="password" />
+      </el-form-item>
       <el-form-item label="昵称" prop="nickname">
         <el-input v-model="form.nickname" />
       </el-form-item>
@@ -54,7 +57,7 @@ export default {
 
     let checkPassword = (rule, value, callback) => {
       if (!value) {
-        callback(new Error("请输入用户名"));
+        callback(new Error("请输入密码"));
       } else if (value.length < 6) {
         callback(new Error("密码为6-20位"));
       } else callback();
@@ -76,13 +79,23 @@ export default {
       } else callback();
     };
 
+    let checkNotEqual = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error("请输入密码"));
+      } else if (value !== this.form.password) {
+        callback(new Error("两次密码输入不一致"));
+      } else {
+        callback();
+      }
+    };
+
     return {
       rules: {
         username: [
           {
             required: true,
             message: "用户名不能为空",
-            trigger: ["blur", "change"],
+            trigger: "blur",
             validator: checkAccount,
           },
         ],
@@ -91,8 +104,17 @@ export default {
           {
             required: true,
             message: "手机号不能为空",
-            trigger: ["blur", "change"],
+            trigger: "blur",
             validator: checkPassword,
+          },
+        ],
+
+        password1: [
+          {
+            required: true,
+            message: "手机号不能为空",
+            trigger: "blur",
+            validator: checkNotEqual,
           },
         ],
 
@@ -100,7 +122,7 @@ export default {
           {
             required: true,
             message: "手机号不能为空",
-            trigger: ["blur", "change"],
+            trigger: "blur",
             validator: checkMobile,
           },
         ],
@@ -109,7 +131,7 @@ export default {
           {
             required: true,
             message: "邮箱不能为空",
-            trigger: ["blur", "change"],
+            trigger: "blur",
             validator: checkMail,
           },
         ],
