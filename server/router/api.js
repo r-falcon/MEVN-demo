@@ -1,16 +1,4 @@
-/**
- * https://blog.csdn.net/weixin_44795287/article/details/117432483
- * bcryptjs 加密
- * JWT(Json Web Token)是实现token技术的一种解决方案,JWT由三部分组成: header(头)、payload(载体)、signature(签名)
- */
-
-const express = require('express')
-const router = express.Router()
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
-
-const User = require('../models/User')
-// const Menu = require('../models/Menu')
+const {router,bcrypt,jwt,User} = require('./index')
 
 /**
  * 用户注册
@@ -100,47 +88,5 @@ router.post('/login', (req, res) => {
     })
   })
 })
-
-/**
- * 获取用户详情
- */
-// router.get('/getUserInfo', (req, res) => {
-//   var userId = req.query.userId || ''
-//   if (userId == '') {
-//     return res.sendResult(null, 1, '请传递必要的参数')
-//   }
-//   Info.find()
-//     .populate('user')
-//     .then((userInfo) => {
-//       let info = {}
-//       userInfo.filter((item) => {
-//         if (item.user._id.toString() == userId) {
-//           info = item
-//           return
-//         }
-//       })
-//       res.sendResult(info, 0, '获取用户详情成功')
-//     })
-// })
-
-/**
- * 获取动态路由
- */
-// router.get('/getMenus', (req, res) => {
-//   Menu.find().then((menuList) => {
-//     if (menuList.length > 0) {
-//       User.findOne({ username: req.cookies.username }).then((res) => {
-//         let list = []
-//         let key = res.isAdmin ? 'admin' : 'normal'
-//         menuList = JSON.parse(JSON.stringify(menuList))
-//         menuList.map((item) => {
-//           item.meta.roles.includes(key) ? list.push(item) : null
-//         })
-//         menuList = list
-//       })
-//     }
-//     res.sendResult(menuList, 0, '获取动态路由成功')
-//   })
-// })
 
 module.exports = router

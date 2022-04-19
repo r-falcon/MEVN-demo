@@ -90,3 +90,28 @@
   .el-submenu__icon-arrow {
   display: none;
 }
+
+.el-cascader{
+  width: 100%;
+}
+
+.el-select{
+  width: 100%;
+}
+
+.el-input-number {
+  width: 100%;
+}
+
+.el-input-number--medium .el-input-number__increase, .el-input-number--medium .el-input-number__decrease{
+  display: none;
+}
+
+.el-input-number--medium .el-input__inner{
+  padding: 0 10px !important;
+  text-align: left;
+}
+
+.el-date-editor.el-input, .el-date-editor.el-input__inner{
+  width: 100%;
+}

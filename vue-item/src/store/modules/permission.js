@@ -25,6 +25,7 @@ const permission = {
               name: "System",
               path: "/system",
               redirect: null,
+              alwaysShow:true,
               component: "Layout",
               meta: {
                 title: "系统维护",
@@ -43,28 +44,28 @@ const permission = {
                     icon: null,
                   },
                 },
-                {
-                  name: "Role",
-                  path: "/system/role",
-                  redirect: null,
-                  component: "system/role/index",
-                  hidden: false,
-                  meta: {
-                    title: "角色管理",
-                    icon: null,
-                  },
-                },
-                {
-                  name: "Menu",
-                  path: "/system/menu",
-                  redirect: null,
-                  component: "system/menu/index",
-                  hidden: false,
-                  meta: {
-                    title: "菜单管理",
-                    icon: null,
-                  },
-                },
+                // {
+                //   name: "Role",
+                //   path: "/system/role",
+                //   redirect: null,
+                //   component: "system/role/index",
+                //   hidden: false,
+                //   meta: {
+                //     title: "角色管理",
+                //     icon: null,
+                //   },
+                // },
+                // {
+                //   name: "Menu",
+                //   path: "/system/menu",
+                //   redirect: null,
+                //   component: "system/menu/index",
+                //   hidden: false,
+                //   meta: {
+                //     title: "菜单管理",
+                //     icon: null,
+                //   },
+                // },
               ],
             },
             {
