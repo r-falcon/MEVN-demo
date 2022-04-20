@@ -3,6 +3,10 @@ var mongoose = require('mongoose')
 module.exports = new mongoose.Schema({
   ONo: String,
   goodsName: String,
+  goodsPrice: {
+    type: Number,
+    default: 0
+  },
   buyPrice: {
     type: Number,
     default: 0
@@ -11,9 +15,9 @@ module.exports = new mongoose.Schema({
     type: Number,
     default: 0
   },
-  buyer:String,
-  buyerAddress:String,
-  buyerPhone:String,
+  buyer: String,
+  buyerAddress: String,
+  buyerPhone: String,
   isPay: {
     type: Boolean,
     default: false
@@ -22,7 +26,7 @@ module.exports = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  createTime:{
+  createTime: {
     type: Date,
     default: new Date(),
   }

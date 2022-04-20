@@ -130,9 +130,10 @@ const stockAdd = function (data) {
               goodsAmount: total
             }
           }).then(res => {
-            flag = true
-            return
+
           })
+          flag = true
+          break
         }
       }
 
