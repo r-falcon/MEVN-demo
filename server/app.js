@@ -49,6 +49,8 @@ const purchase = require('./router/fresh/purchase')
 app.use('/purchase',purchase)
 const stock = require('./router/fresh/stock')
 app.use('/stock',stock)
+const order = require('./router/fresh/order')
+app.use('/order',order)
 
 app.listen(8080, (err) => {
   if (err) {

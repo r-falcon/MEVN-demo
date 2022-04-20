@@ -12,6 +12,7 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/User')
 const Purchase = require('../models/fresh/Purchase')
 const Stock = require('../models/fresh/Stock')
+const Order = require('../models/fresh/Order')
 
 module.exports = {
   router,
@@ -19,5 +20,7 @@ module.exports = {
   jwt,
 
   User,
-  Purchase
+  Purchase,
+  Stock,
+  Order
 }

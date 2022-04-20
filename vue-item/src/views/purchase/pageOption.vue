@@ -9,13 +9,13 @@
       <el-row>
         <el-col :span="12">
           <el-form-item label="订单编号" prop="PNo">
-            <el-input v-model="form.PNo" />
+            <el-input :disabled="!isAdd" v-model="form.PNo" />
           </el-form-item>
         </el-col>
 
         <el-col :span="12">
           <el-form-item label="商品名称" prop="goodsName">
-            <el-input v-model="form.goodsName" />
+            <el-input :disabled="!isAdd" v-model="form.goodsName" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
@@ -45,6 +45,7 @@
           <el-form-item label="商品单价（元）" prop="goodsPrice">
             <el-input-number
               v-model="form.goodsPrice"
+              :disabled="!isAdd"
               :precision="2"
               :min="0"
               :max="9999"
@@ -55,6 +56,7 @@
           <el-form-item label="商品数量（件）" prop="goodsAmount">
             <el-input-number
               v-model="form.goodsAmount"
+              :disabled="!isAdd"
               :precision="0"
               :min="0"
             />
