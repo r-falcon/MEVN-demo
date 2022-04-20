@@ -103,10 +103,27 @@ export default {
             trigger: "blur",
           },
         ],
+
         goodsName: [
           {
             required: true,
             message: "商品名称不能为空",
+            trigger: "blur",
+          },
+        ],
+
+        goodsPrice: [
+          {
+            required: true,
+            message: "商品单价不能为空",
+            trigger: "blur",
+          },
+        ],
+
+        goodsAmount: [
+          {
+            required: true,
+            message: "商品数量不能为空",
             trigger: "blur",
           },
         ],

@@ -96,6 +96,7 @@
 import { getPurchaseList, purchaseDelete } from "@/api/fresh/purchase";
 import commonMixin from "@/views/mixin";
 import PageOption from "./pageOption.vue";
+import { validatenull } from "@/utils/ruoyi";
 
 export default {
   name: "Purchase",
@@ -142,7 +143,9 @@ export default {
     handleEdit(record) {
       this.opt.visible = true;
       this.opt.isAdd = false;
-      record.goodsAddress = record.goodsAddress.split(",");
+      if (record.goodsAddress && validatenull(record.goodsAddress)) {
+        record.goodsAddress = record.goodsAddress.split(",");
+      }
       this.opt.data = record;
     },
 

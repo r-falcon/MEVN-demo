@@ -47,6 +47,8 @@ const system = require('./router/system')
 app.use('/system', system)
 const purchase = require('./router/fresh/purchase')
 app.use('/purchase',purchase)
+const stock = require('./router/fresh/stock')
+app.use('/stock',stock)
 
 app.listen(8080, (err) => {
   if (err) {

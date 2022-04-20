@@ -16,9 +16,9 @@
 ### 库存
 
 - id
-- 名称
-- 分类
-- 库存
+- 商品名称
+- 商品单价
+- 商品数量
 
 ### 订单
 
@@ -85,20 +85,22 @@
 - sort
 
 ## MongoDB 的安装、配置和“"Authentication failed"”的处理
+
 - 去[官网下载](http://www.mongodb.org/downloads)适合自己版本的 mongodb community server
 - 下载相应的 .msi 文件
 - 下载完成后双击打开，按提示操作安装
 - 安装过程通过点击 “custom" 按钮来设置自己想要存放的目录
 - 下一步安装 "install mongodb compass"[图形化可视工具]不勾选
 - 安装完成后，创建数据目录
-- 如果在D盘下安装，就在D盘创建 D:\data\db
-- 运行命令，指认dbpath,logpath 
-切换到当前bin目录执行
-`mongod --dbpath “D:\my test\data\db” --logpath “D:\my test\data\log\mongodb.log`
-直接执行
-`C:\mongodb\bin\mongod --dbpath c:\data\db`
-执行完毕，不要关闭当前窗口
-- 回到bin文件夹，以管理员身份运行 mongo.exe，并尝试进行如下操作:
+- 如果在 D 盘下安装，就在 D 盘创建 D:\data\db
+- 运行命令，指认 dbpath,logpath
+  切换到当前 bin 目录执行
+  `mongod --dbpath “D:\my test\data\db” --logpath “D:\my test\data\log\mongodb.log`
+  直接执行
+  `C:\mongodb\bin\mongod --dbpath c:\data\db`
+  执行完毕，不要关闭当前窗口
+- 回到 bin 文件夹，以管理员身份运行 mongo.exe，并尝试进行如下操作:
+
 ```js
 > db
 test
@@ -108,7 +110,9 @@ switched to db admin
 Error: Authentication failed.
 0
 ```
-- 对于"Authentication failed"的解决办法：手动添加admin账户，执行代码如下
+
+- 对于"Authentication failed"的解决办法：手动添加 admin 账户，执行代码如下
+
 ```js
 > db.createUser({user:'admin',pwd:'admin',roles:[{role:'userAdminAnyDatabase',db:'admin'}]});
 Successfully added user: {
@@ -122,7 +126,9 @@ Successfully added user: {
 }
 >
 ```
-- 此时在执行`db.auth('admin','admin')`返回结果1
+
+- 此时在执行`db.auth('admin','admin')`返回结果 1
+
 ```js
 > db.auth('admin','admin')
 1
