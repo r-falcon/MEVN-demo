@@ -51,7 +51,7 @@ export default {
       if (!value) {
         callback(new Error("请输入用户名"));
       } else if (value.length < 5) {
-        callback(new Error("密码为5-20位"));
+        callback(new Error("用户名为5-20位"));
       } else callback();
     };
 
@@ -81,7 +81,7 @@ export default {
 
     let checkNotEqual = (rule, value, callback) => {
       if (!value) {
-        callback(new Error("请输入密码"));
+        callback(new Error("请重复输入密码"));
       } else if (value !== this.form.password) {
         callback(new Error("两次密码输入不一致"));
       } else {
@@ -96,6 +96,8 @@ export default {
             required: true,
             message: "用户名不能为空",
             trigger: "blur",
+          },
+          {
             validator: checkAccount,
           },
         ],
@@ -103,8 +105,10 @@ export default {
         password: [
           {
             required: true,
-            message: "手机号不能为空",
+            message: "密码不能为空",
             trigger: "blur",
+          },
+          {
             validator: checkPassword,
           },
         ],
@@ -112,8 +116,10 @@ export default {
         password1: [
           {
             required: true,
-            message: "手机号不能为空",
+            message: "重复密码不能为空",
             trigger: "blur",
+          },
+          {
             validator: checkNotEqual,
           },
         ],
@@ -123,6 +129,8 @@ export default {
             required: true,
             message: "手机号不能为空",
             trigger: "blur",
+          },
+          {
             validator: checkMobile,
           },
         ],
@@ -132,6 +140,8 @@ export default {
             required: true,
             message: "邮箱不能为空",
             trigger: "blur",
+          },
+          {
             validator: checkMail,
           },
         ],
