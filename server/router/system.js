@@ -6,14 +6,23 @@ const {router,bcrypt,User} = require('./index')
 router.get('/userList', (req, res) => {
   var page = req.query.pagenum || 1
   var limit = req.query.pagesize || 999
+  var query = req.query.query || ''
+  var reg = new RegExp(query,'i')
+  var _filter = {
+    $or:[
+      {username: {$regex: reg}},
+      {phone: {$regex: reg}},
+      {email: {$regex: reg}}
+    ]
+  }
 
-  User.count().then((count) => {
+  User.count(_filter).then((count) => {
     var pages = Math.ceil(count / limit)
     page = Math.min(page, pages)
     page = Math.max(page, 1)
     var skip = (page - 1) * limit
 
-    User.find()
+    User.find(_filter)
       .limit(limit)
       .skip(skip)
       .then((users) => {

@@ -9,14 +9,22 @@ const {
 router.get('/purchaseList', (req, res) => {
   var page = req.query.pagenum || 1
   var limit = req.query.pagesize || 999
+  var query = req.query.query || ''
+  var reg = new RegExp(query,'i')
+  var _filter = {
+    $or:[
+      {PNo: {$regex: reg}},
+      {goodsName: {$regex: reg}}
+    ]
+  }
 
-  Purchase.count().then((count) => {
+  Purchase.count(_filter).then((count) => {
     var pages = Math.ceil(count / limit)
     page = Math.min(page, pages)
     page = Math.max(page, 1)
     var skip = (page - 1) * limit
 
-    Purchase.find()
+    Purchase.find(_filter)
       .limit(limit)
       .skip(skip)
       .then((purchases) => {

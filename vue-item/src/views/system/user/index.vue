@@ -1,56 +1,73 @@
 <template>
   <div class="app-container">
-    <div style="float: right; margin: 10px">
-      <el-button type="primary" icon="el-icon-plus" @click="handleAdd"
-        >新增</el-button
-      >
-    </div>
-    <el-table v-loading="loading" :data="tableData" style="width: 100%">
-      <el-table-column label="序号" align="center" type="index" />
-      <el-table-column label="用户" align="center" prop="username" />
-      <el-table-column label="昵称" align="center" prop="nickname" />
-      <el-table-column label="手机" align="center" prop="phone" />
-      <el-table-column label="邮箱" align="center" prop="email" />
-      <el-table-column label="角色" align="center" prop="isAdmin">
-        <template slot-scope="{ row }">
-          <el-tag v-if="row.isAdmin" type="success">超级管理员</el-tag>
-          <el-tag v-else>普通用户</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column label="启用状态" align="center" prop="enable">
-        <template slot-scope="{ row }">
-          <el-switch v-model="row.enable" @change="handleChange(row)" />
-        </template>
-      </el-table-column>
-      <el-table-column label="操作" align="center" width="360px">
-        <template slot-scope="{ row }">
-          <el-button type="text" icon="el-icon-lock" @click="resetPwd(row)"
-            >重置密码</el-button
-          >
-          <el-button type="text" icon="el-icon-view" @click="handleView(row)"
-            >查看</el-button
-          >
-          <el-button type="text" icon="el-icon-edit" @click="handleEdit(row)"
-            >修改</el-button
-          >
+    <el-card>
+      <div class="input_box">
+        <div>
+          <el-input
+            placeholder="请输入搜索内容"
+            class="input_con"
+            clearable
+            v-model="queryParams.query"
+          />
+          <el-button icon="el-icon-search" class="input_btn" @click="search" />
           <el-button
-            type="text"
-            style="color: red"
-            icon="el-icon-delete"
-            @click="handleDelete(row)"
-            >删除</el-button
-          >
-        </template>
-      </el-table-column>
-    </el-table>
+            style="margin-left: 10px"
+            icon="el-icon-refresh"
+            class="input_btn"
+            @click="refresh"
+          />
+        </div>
 
-    <pagination
-      v-show="total > 0"
-      :total="total"
-      :page.sync="queryParams.pagenum"
-      :limit.sync="queryParams.pagesize"
-      @pagination="initList"
-    />
+        <el-button type="primary" @click="handleAdd">+ 新增</el-button>
+      </div>
+
+      <el-table v-loading="loading" :data="tableData" style="width: 100%">
+        <el-table-column label="序号" align="center" type="index" />
+        <el-table-column label="用户" align="center" prop="username" />
+        <el-table-column label="昵称" align="center" prop="nickname" />
+        <el-table-column label="手机" align="center" prop="phone" />
+        <el-table-column label="邮箱" align="center" prop="email" />
+        <el-table-column label="角色" align="center" prop="isAdmin">
+          <template slot-scope="{ row }">
+            <el-tag v-if="row.isAdmin" type="success">超级管理员</el-tag>
+            <el-tag v-else>普通用户</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="启用状态" align="center" prop="enable">
+          <template slot-scope="{ row }">
+            <el-switch v-model="row.enable" @change="handleChange(row)" />
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" align="center" width="360px">
+          <template slot-scope="{ row }">
+            <el-button type="text" icon="el-icon-lock" @click="resetPwd(row)"
+              >重置密码</el-button
+            >
+            <el-button type="text" icon="el-icon-view" @click="handleView(row)"
+              >查看</el-button
+            >
+            <el-button type="text" icon="el-icon-edit" @click="handleEdit(row)"
+              >修改</el-button
+            >
+            <el-button
+              type="text"
+              style="color: red"
+              icon="el-icon-delete"
+              @click="handleDelete(row)"
+              >删除</el-button
+            >
+          </template>
+        </el-table-column>
+      </el-table>
+
+      <pagination
+        v-show="total > 0"
+        :total="total"
+        :page.sync="queryParams.pagenum"
+        :limit.sync="queryParams.pagesize"
+        @pagination="initList"
+      />
+    </el-card>
 
     <page-option
       :opt="opt"
@@ -82,6 +99,7 @@ export default {
     return {
       loading: false,
       queryParams: {
+        query: "",
         pagenum: 1,
         pagesize: 10,
       },
@@ -196,6 +214,38 @@ export default {
           this.$message.error("状态修改失败");
         });
     },
+
+    search() {
+      console.log(this.queryParams);
+      this.initList();
+    },
+
+    refresh() {
+      this.queryParams = {
+        query: "",
+        pagenum: 1,
+        pagesize: 10,
+      };
+      this.initList();
+    },
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.input_box {
+  margin: 10px auto;
+  display: flex;
+  justify-content: space-between;
+
+  .input_con {
+    width: 300px;
+    border-radius: 1px solid #ccc;
+  }
+
+  .input_btn {
+    background: #f2f7f8;
+    margin-left: -5px;
+  }
+}
+</style>

@@ -1,71 +1,88 @@
 <template>
   <div class="app-container">
-    <div style="float: right; margin: 10px">
-      <el-button type="primary" icon="el-icon-plus" @click="handleAdd"
-        >新增</el-button
-      >
-    </div>
-    <el-table v-loading="loading" :data="tableData" style="width: 100%">
-      <el-table-column label="序号" align="center" type="index" />
-      <el-table-column label="订单编号" align="center" prop="PNo" />
-      <el-table-column label="商品名称" align="center" prop="goodsName" />
-      <el-table-column label="采购公司" align="center" prop="goodsCompany" />
-      <el-table-column label="来源地址" align="center" prop="goodsAddress" />
-      <el-table-column label="商品分类" align="center" prop="goodsSort">
-        <template slot-scope="{ row }">
-          {{ SPFL[row.goodsSort] }}
-        </template>
-      </el-table-column>
-      <el-table-column
-        label="商品单价（元）"
-        align="center"
-        prop="goodsPrice"
-      />
-      <el-table-column
-        label="商品数量（件）"
-        align="center"
-        prop="goodsAmount"
-      />
-      <el-table-column label="是否支付" align="center" prop="isPay">
-        <template slot-scope="{ row }">
-          <el-tag v-if="row.isPay" type="success">是</el-tag>
-          <el-tag v-else type="danger">否</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column label="是否发货" align="center" prop="isTrans">
-        <template slot-scope="{ row }">
-          <el-tag v-if="row.isTrans" type="success">是</el-tag>
-          <el-tag v-else type="danger">否</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column label="创建时间" align="center" prop="createTime">
-        <template slot-scope="{ row }">
-          {{ parseTime(row.createTime) }}
-        </template>
-      </el-table-column>
-      <el-table-column label="操作" align="center">
-        <template slot-scope="{ row }">
-          <el-button type="text" icon="el-icon-edit" @click="handleEdit(row)"
-            >修改</el-button
-          >
+    <el-card>
+      <div class="input_box">
+        <div>
+          <el-input
+            placeholder="请输入搜索内容"
+            class="input_con"
+            clearable
+            v-model="queryParams.query"
+          />
+          <el-button icon="el-icon-search" class="input_btn" @click="search" />
           <el-button
-            type="text"
-            style="color: red"
-            icon="el-icon-delete"
-            @click="handleDelete(row)"
-            >删除</el-button
-          >
-        </template>
-      </el-table-column>
-    </el-table>
+            style="margin-left: 10px"
+            icon="el-icon-refresh"
+            class="input_btn"
+            @click="refresh"
+          />
+        </div>
 
-    <pagination
-      v-show="total > 0"
-      :total="total"
-      :page.sync="queryParams.pagenum"
-      :limit.sync="queryParams.pagesize"
-      @pagination="initList"
-    />
+        <el-button type="primary" @click="handleAdd"> + 新增 </el-button>
+      </div>
+
+      <el-table v-loading="loading" :data="tableData" style="width: 100%">
+        <el-table-column label="序号" align="center" type="index" />
+        <el-table-column label="订单编号" align="center" prop="PNo" />
+        <el-table-column label="商品名称" align="center" prop="goodsName" />
+        <el-table-column label="采购公司" align="center" prop="goodsCompany" />
+        <el-table-column label="来源地址" align="center" prop="goodsAddress" />
+        <el-table-column label="商品分类" align="center" prop="goodsSort">
+          <template slot-scope="{ row }">
+            {{ SPFL[row.goodsSort] }}
+          </template>
+        </el-table-column>
+        <el-table-column
+          label="商品单价（元）"
+          align="center"
+          prop="goodsPrice"
+        />
+        <el-table-column
+          label="商品数量（件）"
+          align="center"
+          prop="goodsAmount"
+        />
+        <el-table-column label="是否支付" align="center" prop="isPay">
+          <template slot-scope="{ row }">
+            <el-tag v-if="row.isPay" type="success">是</el-tag>
+            <el-tag v-else type="danger">否</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="是否发货" align="center" prop="isTrans">
+          <template slot-scope="{ row }">
+            <el-tag v-if="row.isTrans" type="success">是</el-tag>
+            <el-tag v-else type="danger">否</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="创建时间" align="center" prop="createTime">
+          <template slot-scope="{ row }">
+            {{ parseTime(row.createTime) }}
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" align="center">
+          <template slot-scope="{ row }">
+            <el-button type="text" icon="el-icon-edit" @click="handleEdit(row)"
+              >修改</el-button
+            >
+            <el-button
+              type="text"
+              style="color: red"
+              icon="el-icon-delete"
+              @click="handleDelete(row)"
+              >删除</el-button
+            >
+          </template>
+        </el-table-column>
+      </el-table>
+
+      <pagination
+        v-show="total > 0"
+        :total="total"
+        :page.sync="queryParams.pagenum"
+        :limit.sync="queryParams.pagesize"
+        @pagination="initList"
+      />
+    </el-card>
 
     <page-option
       :opt="opt"
@@ -90,6 +107,7 @@ export default {
     return {
       loading: false,
       queryParams: {
+        query: "",
         pagenum: 1,
         pagesize: 10,
       },
@@ -162,6 +180,37 @@ export default {
           });
       });
     },
+
+    search() {
+      this.initList();
+    },
+
+    refresh() {
+      this.queryParams = {
+        query: "",
+        pagenum: 1,
+        pagesize: 10,
+      };
+      this.initList();
+    },
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.input_box {
+  margin: 10px auto;
+  display: flex;
+  justify-content: space-between;
+
+  .input_con {
+    width: 300px;
+    border-radius: 1px solid #ccc;
+  }
+
+  .input_btn {
+    background: #f2f7f8;
+    margin-left: -5px;
+  }
+}
+</style>
