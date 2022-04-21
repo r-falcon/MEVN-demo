@@ -22,7 +22,7 @@ module.exports = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  createTime:{
+  createTime: {
     type: Date,
     default: new Date(),
   }

@@ -1,4 +1,4 @@
 var mongoose = require('mongoose')
-var stockSchema = require('../../schemas/fresh/stocks')
+var stocksSchema = require('../../schemas/fresh/stocks')
 
-module.exports = mongoose.model('Stock',stockSchema)
+module.exports = mongoose.model('Stock', stocksSchema)

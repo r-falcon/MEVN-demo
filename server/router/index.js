@@ -13,6 +13,11 @@ const User = require('../models/User')
 const Purchase = require('../models/fresh/Purchase')
 const Stock = require('../models/fresh/Stock')
 const Order = require('../models/fresh/Order')
+const Category = require('../models/article/Category')
+const Content = require('../models/article/Content')
+const Abuy = require('../models/analysis/Abuy')
+const Astore = require('../models/analysis/Astore')
+const ATrans = require('../models/analysis/Atrans')
 
 module.exports = {
   router,
@@ -22,5 +27,10 @@ module.exports = {
   User,
   Purchase,
   Stock,
-  Order
+  Order,
+  Category,
+  Content,
+  Abuy,
+  Astore,
+  ATrans
 }

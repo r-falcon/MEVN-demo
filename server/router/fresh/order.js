@@ -120,7 +120,8 @@ const orderAdd = function (data) {
     Stock.updateOne({
       _id: stocks._id
     }, {
-      goodsAmount: stocks.goodsAmount - data.buyAmount
+      saleAmount: stocks.saleAmount + data.buyAmount,
+      storeAmount: stocks.storeAmount - data.buyAmount
     }).then(res => {
       return
     })
@@ -135,7 +136,8 @@ const orderDelete = function (data) {
     Stock.updateOne({
       _id: stocks._id
     }, {
-      goodsAmount: stocks.goodsAmount + data.buyAmount
+      saleAmount: stocks.saleAmount - data.buyAmount,
+      storeAmount: stocks.storeAmount + data.buyAmount
     }).then(res => {
       return
     })

@@ -30,7 +30,11 @@
         </el-col>
         <el-col :span="12">
           <el-form-item label="商品分类" prop="goodsSort">
-            <el-select v-model="form.goodsSort" placeholder="请选择">
+            <el-select
+              :disabled="!isAdd"
+              v-model="form.goodsSort"
+              placeholder="请选择"
+            >
               <el-option
                 v-for="item in goodsSort"
                 :key="item.value"
@@ -111,6 +115,14 @@ export default {
             required: true,
             message: "商品名称不能为空",
             trigger: "blur",
+          },
+        ],
+
+        goodsSort: [
+          {
+            required: true,
+            message: "商品分类不能为空",
+            trigger: "change",
           },
         ],
 

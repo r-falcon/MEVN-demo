@@ -1,4 +1,4 @@
 var mongoose = require('mongoose')
-var orderSchema = require('../../schemas/fresh/orders')
+var ordersSchema = require('../../schemas/fresh/orders')
 
-module.exports = mongoose.model('Order',orderSchema)
+module.exports = mongoose.model('Order', ordersSchema)

@@ -3,6 +3,7 @@ var mongoose = require('mongoose')
 module.exports = new mongoose.Schema({
   ONo: String,
   goodsName: String,
+  goodsSort: String,
   goodsPrice: {
     type: Number,
     default: 0

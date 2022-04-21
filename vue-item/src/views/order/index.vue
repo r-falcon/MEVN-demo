@@ -24,7 +24,12 @@
       <el-table v-loading="loading" :data="tableData" style="width: 100%">
         <el-table-column label="序号" align="center" type="index" />
         <el-table-column label="订单编号" align="center" prop="ONo" />
-        <el-table-column label="商品名称 " align="center" prop="goodsName" />
+        <el-table-column label="商品名称" align="center" prop="goodsName" />
+        <el-table-column label="商品分类" align="center" prop="goodsSort">
+          <template slot-scope="{ row }">
+            {{ SPFL[row.goodsSort] }}
+          </template>
+        </el-table-column>
         <el-table-column
           label="采购单价（元）"
           align="center"
@@ -60,7 +65,7 @@
             {{ parseTime(row.createTime) }}
           </template>
         </el-table-column>
-        <el-table-column label="操作" align="center">
+        <el-table-column label="操作" align="center" width="140px">
           <template slot-scope="{ row }">
             <el-button type="text" icon="el-icon-edit" @click="handleEdit(row)"
               >修改</el-button

@@ -27,7 +27,9 @@ app.all('*', (req, res, next) => {
 
 // bodyParser
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({
+  extended: false
+}))
 
 // cookieParser
 app.use(cookieParser())
@@ -46,11 +48,21 @@ app.use('/api', api)
 const system = require('./router/system')
 app.use('/system', system)
 const purchase = require('./router/fresh/purchase')
-app.use('/purchase',purchase)
+app.use('/purchase', purchase)
 const stock = require('./router/fresh/stock')
-app.use('/stock',stock)
+app.use('/stock', stock)
 const order = require('./router/fresh/order')
-app.use('/order',order)
+app.use('/order', order)
+const abuy = require('./router/analysis/abuys')
+app.use('/abuy', abuy)
+const astore = require('./router/analysis/astores')
+app.use('/astore', astore)
+const atrans = require('./router/analysis/atrans')
+app.use('/atrans', atrans)
+// const category = require('./router/article/category')
+// app.use('/category', category)
+// const content = require('./router/article/content')
+// app.use('/content', content)
 
 app.listen(8080, (err) => {
   if (err) {

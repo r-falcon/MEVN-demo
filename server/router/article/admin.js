@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const User = require('../models/User')
+const User = require('../../models/User')
 const Category = require('../models/Category')
 const Content = require('../models/Content')
 
@@ -22,7 +22,10 @@ router.get('/userList', (req, res) => {
       .limit(limit)
       .skip(skip)
       .then((users) => {
-        res.sendResult({ records: users, total: count }, 0, '用户列表获取成功')
+        res.sendResult({
+          records: users,
+          total: count
+        }, 0, '用户列表获取成功')
       })
   })
 })
@@ -45,8 +48,10 @@ router.get('/sortList', (req, res) => {
       .limit(limit)
       .skip(skip)
       .then((categories) => {
-        res.sendResult(
-          { records: categories, total: count },
+        res.sendResult({
+            records: categories,
+            total: count
+          },
           0,
           '分类列表获取成功'
         )
@@ -58,11 +63,15 @@ router.get('/sortList', (req, res) => {
 router.post('/sortAdd', (req, res) => {
   var name = req.body.name || ''
 
-  Category.findOne({ name: name }).then((category) => {
+  Category.findOne({
+    name: name
+  }).then((category) => {
     if (category) {
       return res.sendResult(null, 1, '该分类已存在')
     } else {
-      new Category({ name: name }).save().then((newCategory) => {
+      new Category({
+        name: name
+      }).save().then((newCategory) => {
         return res.sendResult(newCategory, 0, '分类添加成功')
       })
     }
@@ -73,19 +82,30 @@ router.post('/sortAdd', (req, res) => {
 router.post('/sortEdit', (req, res) => {
   var id = req.body._id || ''
   var name = req.body.name || ''
-  Category.findOne({ _id: id }).then((category) => {
+  Category.findOne({
+    _id: id
+  }).then((category) => {
     if (!category) {
       return res.sendResult(null, 1, '分类信息不存在')
     } else {
       if (name === category.name) {
         return res.sendResult(category, 0, '分类修改成功')
       } else {
-        Category.findOne({ _id: { $ne: id }, name: name }).then(
+        Category.findOne({
+          _id: {
+            $ne: id
+          },
+          name: name
+        }).then(
           (sameCategory) => {
             if (sameCategory) {
               return res.sendResult(null, 1, '数据库中存在同名的分类')
             } else {
-              Category.updateOne({ _id: id }, { name: name }).then(
+              Category.updateOne({
+                _id: id
+              }, {
+                name: name
+              }).then(
                 (newCategory) => {
                   return res.sendResult(newCategory, 0, '分类修改成功')
                 }
@@ -102,7 +122,9 @@ router.post('/sortEdit', (req, res) => {
 router.get('/sortDelete', (req, res) => {
   var id = req.query.id || ''
 
-  Category.remove({ _id: id }).then(() => {
+  Category.remove({
+    _id: id
+  }).then(() => {
     res.sendResult(null, 0, '删除成功')
   })
 })
@@ -125,10 +147,14 @@ router.get('/contentList', (req, res) => {
       .limit(limit)
       .skip(skip)
       .populate(['category', 'user'])
-      .sort({ addTime: -1 })
+      .sort({
+        addTime: -1
+      })
       .then((contents) => {
-        res.sendResult(
-          { records: contents, total: count },
+        res.sendResult({
+            records: contents,
+            total: count
+          },
           0,
           '内容列表获取成功'
         )
@@ -154,15 +180,14 @@ router.post('/contentAdd', (req, res) => {
 // 修改内容
 router.post('/contentEdit', (req, res) => {
   var id = req.body._id || ''
-  Content.updateOne(
-    { _id: id },
-    {
-      category: req.body.category,
-      title: req.body.title,
-      description: req.body.description,
-      content: req.body.content,
-    }
-  ).then((newContent) => {
+  Content.updateOne({
+    _id: id
+  }, {
+    category: req.body.category,
+    title: req.body.title,
+    description: req.body.description,
+    content: req.body.content,
+  }).then((newContent) => {
     res.sendResult(newContent, 0, '内容修改成功')
   })
 })
@@ -170,7 +195,9 @@ router.post('/contentEdit', (req, res) => {
 // 删除内容
 router.get('/contentDelete', (req, res) => {
   var id = req.query.id || ''
-  Content.remove({ _id: id }).then(() => {
+  Content.remove({
+    _id: id
+  }).then(() => {
     res.sendResult(null, 0, '删除成功')
   })
 })
@@ -184,7 +211,9 @@ router.post('/contentComment', (req, res) => {
     comment: req.body.comment,
   }
 
-  Content.findOne({ _id: contentId }).then((content) => {
+  Content.findOne({
+    _id: contentId
+  }).then((content) => {
     content.comments.push(postData)
     content.save().then((newContent) => {
       res.sendResult(newContent, 0, '评论添加成功')
@@ -197,7 +226,9 @@ router.get('/commentDelete', (req, res) => {
   var contentId = req.query.contentId || ''
   var comment = req.query.comment || ''
 
-  Content.findOne({ _id: contentId })
+  Content.findOne({
+      _id: contentId
+    })
     .populate(['category', 'user'])
     .then((content) => {
       content.comments = content.comments.filter(

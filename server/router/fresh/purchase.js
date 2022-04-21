@@ -108,6 +108,7 @@ router.get('/deletePurchase', (req, res) => {
 })
 
 const stockAdd = function (data) {
+  console.log(data);
   Stock.find({
     goodsName: data.goodsName
   }).then((stocks) => {
@@ -115,20 +116,21 @@ const stockAdd = function (data) {
       new Stock({
         goodsName: data.goodsName,
         goodsPrice: data.goodsPrice,
-        goodsAmount: data.goodsAmount
+        goodsAmount: data.goodsAmount,
+        goodsSort: data.goodsSort
       }).save()
     } else {
       var flag = false
       for (let i = 0; i < stocks.length; i++) {
         if (stocks[i].goodsPrice == data.goodsPrice) {
           let total = stocks[i].goodsAmount + data.goodsAmount
+          let store = stocks[i].storeAmount + data.goodsAmount
 
           Stock.updateOne({
             _id: stocks[i]._id
           }, {
-            $set: {
-              goodsAmount: total
-            }
+            goodsAmount: total,
+            storeAmount: store
           }).then(res => {
 
           })
@@ -141,7 +143,8 @@ const stockAdd = function (data) {
         new Stock({
           goodsName: data.goodsName,
           goodsPrice: data.goodsPrice,
-          goodsAmount: data.goodsAmount
+          goodsAmount: data.goodsAmount,
+          goodsSort: data.goodsSort
         }).save()
       }
     }
@@ -156,7 +159,8 @@ const stockDelete = function (data) {
     Stock.updateOne({
       _id: stocks._id
     }, {
-      goodsAmount: stocks.goodsAmount - data.goodsAmount
+      goodsAmount: stocks.goodsAmount - data.goodsAmount,
+      storeAmount: stocks.storeAmount - data.goodsAmount
     }).then(res => {
       return
     })

@@ -22,15 +22,28 @@
       <el-table v-loading="loading" :data="tableData" style="width: 100%">
         <el-table-column label="序号" align="center" type="index" />
         <el-table-column label="商品名称" align="center" prop="goodsName" />
+        <el-table-column label="商品分类" align="center" prop="goodsSort">
+          <template slot-scope="{ row }">{{ SPFL[row.goodsSort] }}</template>
+        </el-table-column>
         <el-table-column
           label="商品单价（元）"
           align="center"
           prop="goodsPrice"
         />
         <el-table-column
-          label="商品数量（件）"
+          label="采购总量（件）"
           align="center"
           prop="goodsAmount"
+        />
+        <el-table-column
+          label="销售总量（件）"
+          align="center"
+          prop="saleAmount"
+        />
+        <el-table-column
+          label="库存总量（件）"
+          align="center"
+          prop="storeAmount"
         />
       </el-table>
 
@@ -47,11 +60,19 @@
 
 <script>
 import { getStockList } from "@/api/fresh/stock";
+const SPFL = {
+  0: "蔬菜",
+  1: "水果",
+  2: "肉类",
+  3: "水产",
+  4: "干货",
+};
 
 export default {
   name: "Stock",
   data() {
     return {
+      SPFL,
       loading: false,
       queryParams: {
         query: "",
