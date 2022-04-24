@@ -67,10 +67,15 @@
         </el-table-column>
         <el-table-column label="操作" align="center" width="140px">
           <template slot-scope="{ row }">
-            <el-button type="text" icon="el-icon-edit" @click="handleEdit(row)"
+            <el-button
+              v-hasRole="['admin']"
+              type="text"
+              icon="el-icon-edit"
+              @click="handleEdit(row)"
               >修改</el-button
             >
             <el-button
+              v-hasRole="['admin']"
               type="text"
               style="color: red"
               icon="el-icon-delete"

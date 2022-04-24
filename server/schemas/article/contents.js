@@ -12,13 +12,9 @@ module.exports = new mongoose.Schema({
     ref: 'User',
   },
 
-  addTime: {
+  createTime: {
     type: Date,
     default: new Date(),
-  },
-  views: {
-    type: Number,
-    default: 0,
   },
   title: String,
   description: {

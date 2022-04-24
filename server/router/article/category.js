@@ -54,12 +54,39 @@ router.post('/addCategory', (req, res) => {
  * 修改分类
  */
 router.post('/editCategory', (req, res) => {
-  Category.updateOne({
-    _id: req.body._id
-  }, {
-    desc: req.body.desc
-  }).then((newcategories) => {
-    res.sendResult(newcategories, 0, "修改成功")
+  var id = req.body._id || ''
+  var name = req.body.name || ''
+
+  Category.findOne({
+    _id: id
+  }).then((category) => {
+    if (!category) {
+      return res.sendResult(null, 1, '分类信息不存在')
+    } else {
+      if (name == category.name) {
+        return res.sendResult(category, 0, '分类修改成功')
+      } else {
+        Category.findOne({
+          _id: {
+            $ne: id
+          },
+          name: name
+        }).then((sameCategory) => {
+          if (sameCategory) {
+            return res.sendResult(null, 1, '数据库中存在同名的分类')
+          } else {
+            Category.updateOne({
+              _id: id
+            }, {
+              name: name,
+              desc: desc
+            }).then((newCategory) => {
+              return res.sendResult(newCategory, 0, '分类修改成功')
+            })
+          }
+        })
+      }
+    }
   })
 })
 

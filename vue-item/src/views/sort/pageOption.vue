@@ -7,7 +7,7 @@
   >
     <el-form ref="form" :model="form" :rules="rules" label-width="100px">
       <el-form-item label="分类名称" prop="name">
-        <el-input :disabled="!isAdd" v-model="form.name" />
+        <el-input v-model="form.name" />
       </el-form-item>
 
       <el-form-item label="分类描述" prop="desc">

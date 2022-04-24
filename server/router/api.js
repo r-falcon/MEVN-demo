@@ -1,4 +1,9 @@
-const {router,bcrypt,jwt,User} = require('./index')
+const {
+  router,
+  bcrypt,
+  jwt,
+  User
+} = require('./index')
 
 /**
  * 用户注册
@@ -43,8 +48,8 @@ router.post('/login', (req, res) => {
       return res.sendResult(null, 1, '用户不存在')
     }
 
-    if(!user.enable){
-      return res.sendResult(null,1,'该用户未启用')
+    if (!user.enable) {
+      return res.sendResult(null, 1, '该用户未启用')
     }
 
     // 当前时间
@@ -66,14 +71,12 @@ router.post('/login', (req, res) => {
         }
         jwt.sign(
           rule,
-          'secret',
-          {
+          'secret', {
             expiresIn: 60 * 60 * 24,
           },
           (err, token) => {
             if (err) throw err
-            return res.sendResult(
-              {
+            return res.sendResult({
                 token: 'Bearer ' + token,
                 user: user,
               },

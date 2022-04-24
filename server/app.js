@@ -9,19 +9,22 @@ const app = express()
 
 // CORS设置跨域访问
 app.all('*', (req, res, next) => {
-  // res.header('Access-Control-Allow-Origin', '*')
-  // res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-  // res.header('Access-Control-Allow-Methods', '*')
+  // 第一种
   res.header('Access-Control-Allow-Origin', '*')
-  res.header('Access-Control-Allow-Headers', 'X-Requested-With, mytoken')
-  res.header('Access-Control-Allow-Headers', 'X-Requested-With, Authorization')
-  res.setHeader('Content-Type', 'application/json;charset=utf-8')
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Content-Type,Content-Length, Authorization, Accept,X-Requested-With'
-  )
-  res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS')
-  res.header('X-Powered-By', ' 3.2.1')
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+  res.header('Access-Control-Allow-Methods', '*')
+
+  // 第二种
+  // res.header('Access-Control-Allow-Origin', '*')
+  // res.header('Access-Control-Allow-Headers', 'X-Requested-With, mytoken')
+  // res.header('Access-Control-Allow-Headers', 'X-Requested-With, Authorization')
+  // res.setHeader('Content-Type', 'application/json;charset=utf-8')
+  // res.header(
+  //   'Access-Control-Allow-Headers',
+  //   'Content-Type,Content-Length, Authorization, Accept,X-Requested-With'
+  // )
+  // res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS')
+  // res.header('X-Powered-By', ' 3.2.1')
   next()
 })
 

@@ -15,7 +15,7 @@ export function removeToken() {
 }
 
 export function setUser(user) {
-  return Cookies.set("user", user);
+  return Cookies.set("user", JSON.stringify(user));
 }
 
 export function removeUser() {
