@@ -59,10 +59,10 @@ const astore = require('./router/analysis/astores')
 app.use('/astore', astore)
 const atrans = require('./router/analysis/atrans')
 app.use('/atrans', atrans)
-// const category = require('./router/article/category')
-// app.use('/category', category)
-// const content = require('./router/article/content')
-// app.use('/content', content)
+const category = require('./router/article/category')
+app.use('/catetory', category)
+const content = require('./router/article/content')
+app.use('/content', content)
 
 app.listen(8080, (err) => {
   if (err) {
