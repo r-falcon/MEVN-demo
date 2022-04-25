@@ -25,11 +25,11 @@ export function userAdd(data) {
 /**
  * 根据id获取详情 
  */
- export function getUser(params) {
+export function getUserInfo(params) {
   return request({
     url: "/system/getUserById",
     method: "get",
-    params:params
+    params: params
   });
 }
 
@@ -47,32 +47,32 @@ export function userEdit(data) {
 /**
  * 删除用户
  */
- export function userDelete(params) {
+export function userDelete(params) {
   return request({
     url: "/system/deleteUser",
     method: "get",
-    params:params
+    params: params
   });
 }
 
 /**
  * 重置密码
  */
- export function pwdReset(data) {
+export function pwdReset(data) {
   return request({
     url: "/system/initPwd",
     method: "post",
-    data:data 
+    data: data
   });
 }
 
 /**
  * 修改状态
  */
- export function userChange(data) {
+export function userChange(data) {
   return request({
     url: "/system/changeStatus",
     method: "post",
-    data:data 
+    data: data
   });
 }

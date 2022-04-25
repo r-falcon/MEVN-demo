@@ -18,6 +18,10 @@ export function setUser(user) {
   return Cookies.set("user", JSON.stringify(user));
 }
 
+export function getUser(user) {
+  return Cookies.get("user", user)
+}
+
 export function removeUser() {
   return Cookies.remove("user");
 }

@@ -4,7 +4,7 @@ const passport = require('passport')
 const cookieParser = require('cookie-parser')
 // 引入数据库连接
 require('./db/connect')
-
+const path = require('path')
 const app = express()
 
 // CORS设置跨域访问
@@ -66,6 +66,11 @@ const category = require('./router/article/category')
 app.use('/catetory', category)
 const content = require('./router/article/content')
 app.use('/content', content)
+const upload = require('./router/upload')
+app.use('/upload', upload)
+
+// 设置静态目录
+app.use(express.static(path.join(__dirname, 'public')))
 
 app.listen(8080, (err) => {
   if (err) {

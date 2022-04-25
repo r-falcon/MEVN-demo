@@ -2,7 +2,7 @@ var mongoose = require('mongoose')
 
 module.exports = new mongoose.Schema({
   username: String,
-  nickname:String,
+  nickname: String,
   password: String,
   isAdmin: {
     type: Boolean,
@@ -14,7 +14,10 @@ module.exports = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
-  avatar: String,
+  avatar: {
+    type: String,
+    default: ''
+  },
   createTime: {
     type: Date,
     default: new Date(),

@@ -1,6 +1,8 @@
-import { constantRoutes } from "@/router";
+import {
+  constantRoutes
+} from "@/router";
 import Layout from "@/layout/index";
-import store from "@/store";
+import store from '../../store'
 
 const permission = {
   state: {
@@ -15,25 +17,25 @@ const permission = {
   },
   actions: {
     // 生成路由
-    GenerateRoutes({ commit }) {
+    GenerateRoutes({
+      commit
+    }) {
       return new Promise((resolve) => {
         var res = {
           code: 0,
           message: "获取动态路由成功",
-          data: [
-            {
+          data: [{
               name: "System",
               path: "/system",
               redirect: null,
-              alwaysShow:true,
+              alwaysShow: true,
               component: "Layout",
               meta: {
                 title: "系统维护",
                 icon: "nested",
                 roles: ["admin"],
               },
-              children: [
-                {
+              children: [{
                   name: "User",
                   path: "/system/user",
                   redirect: null,
@@ -44,28 +46,17 @@ const permission = {
                     icon: null,
                   },
                 },
-                // {
-                //   name: "Role",
-                //   path: "/system/role",
-                //   redirect: null,
-                //   component: "system/role/index",
-                //   hidden: false,
-                //   meta: {
-                //     title: "角色管理",
-                //     icon: null,
-                //   },
-                // },
-                // {
-                //   name: "Menu",
-                //   path: "/system/menu",
-                //   redirect: null,
-                //   component: "system/menu/index",
-                //   hidden: false,
-                //   meta: {
-                //     title: "菜单管理",
-                //     icon: null,
-                //   },
-                // },
+                {
+                  name: "Center",
+                  path: "/system/center",
+                  redirect: null,
+                  component: "system/profile/index",
+                  hidden: true,
+                  meta: {
+                    title: "个人中心",
+                    icon: null,
+                  },
+                }
               ],
             },
             {
@@ -78,8 +69,7 @@ const permission = {
                 icon: "form",
                 roles: ["admin", "normal"],
               },
-              children: [
-                {
+              children: [{
                   name: "Purchase",
                   path: "/fresh/purchase",
                   redirect: null,
@@ -135,8 +125,7 @@ const permission = {
                 icon: "list",
                 roles: ["admin", "normal"],
               },
-              children: [
-                {
+              children: [{
                   name: "Sort",
                   path: "/article/sort",
                   redirect: null,
@@ -165,9 +154,9 @@ const permission = {
         /**
          * 权限校验开始
          */
-        let key = localStorage.getItem("role");
+        let key = store.getters.roles[0]
+        console.log('key', key);
         let list = [];
-        console.log("key", key);
         res.data &&
           res.data.forEach((item) =>
             item.meta.roles.includes(key) ? list.push(item) : null
@@ -176,6 +165,7 @@ const permission = {
         /**
          * 权限校验结束
          */
+        console.log(res.data);
         const accessedRoutes = filterAsyncRouter(res.data);
         accessedRoutes.push({
           path: "*",
@@ -210,6 +200,7 @@ export const loadView = (view) => {
   if (process.env.NODE_ENV === "development") {
     return (resolve) => require([`@/views/${view}`], resolve);
   } else {
+    console.log(1234);
     // 使用 import 实现生产环境的路由懒加载
     return () => import(`@/views/${view}`);
   }
