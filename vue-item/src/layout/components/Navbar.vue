@@ -38,13 +38,13 @@
         trigger="click"
       >
         <div class="avatar-wrapper">
-          <img v-if="user.avatar" :src="user.avatar" class="user-avatar" />
-
+          <!-- <img v-if="user.avatar" :src="user.avatar" class="user-avatar" />
           <img
             v-else
             :src="require('@/assets/images/profile.jpg')"
             class="user-avatar"
-          />
+          /> -->
+          <img :src="avatar" class="user-avatar" />
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown">
@@ -88,7 +88,7 @@ export default {
     RuoYiDoc,
   },
   computed: {
-    ...mapGetters(["sidebar", "device", "user"]),
+    ...mapGetters(["sidebar", "device", "avatar"]),
     setting: {
       get() {
         return this.$store.state.settings.showSettings;
@@ -104,14 +104,6 @@ export default {
       get() {
         return this.$store.state.settings.topNav;
       },
-    },
-  },
-  watch: {
-    "user.avatar": {
-      handler: function (val, oldVal) {
-        this.user.avatar = val;
-      },
-      immediate: true,
     },
   },
   methods: {

@@ -17,6 +17,7 @@ const user = {
   state: {
     token: getToken(),
     user: {},
+    avatar: '',
     roles: [],
     permissions: [],
   },
@@ -27,6 +28,9 @@ const user = {
     },
     SET_USER: (state, user) => {
       state.user = user;
+    },
+    SET_AVATAR: (state, avatar) => {
+      state.avatar = avatar
     },
     SET_ROLES: (state, roles) => {
       state.roles = roles;
@@ -62,26 +66,22 @@ const user = {
       state
     }) {
       return new Promise((resolve, reject) => {
-        // if (localStorage.getItem("isAdmin") == 'true') {
-        //   localStorage.setItem("role", ["admin"]);
-        //   commit("SET_ROLES", ["admin"]);
-        // } else {
-        //   localStorage.setItem("role", ["normal"]);
-        //   commit("SET_ROLES", ["normal"]);
-        // }
-        // console.log(state.user);
-        // resolve(state.user);
         getUserInfo({
           id: localStorage.getItem('userId')
         }).then(res => {
-          setUser(res.data);
-          commit("SET_USER", res.data);
+          // setUser(res.data);
+          // commit("SET_USER", res.data);
           if (res.data.isAdmin) {
             commit("SET_ROLES", ["admin"]);
           } else {
             commit("SET_ROLES", ["normal"]);
           }
-          resolve()
+          console.log(res.data);
+          const avatar = res.data.avatar == "" ? require("@/assets/images/profile.jpg") : res.data.avatar
+          commit('SET_AVATAR', avatar)
+          resolve(res)
+        }).catch(error => {
+          reject(error)
         })
       });
     },
@@ -92,10 +92,10 @@ const user = {
     }) {
       return new Promise((resolve) => {
         commit("SET_TOKEN", "");
-        commit("SET_USER", {});
         commit("SET_ROLES", []);
         removeToken();
-        removeUser();
+        // commit("SET_USER", {});
+        // removeUser();
         localStorage.clear();
         resolve();
       });

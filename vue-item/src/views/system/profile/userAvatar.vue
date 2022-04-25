@@ -2,7 +2,12 @@
   <div>
     <div class="user-info-head" @click="editCropper()">
       <img v-if="user.avatar" :src="user.avatar" class="img-circle img-lg" />
-      <img v-else title="点击上传头像" class="img-circle img-lg" />
+      <img
+        v-else
+        title="点击上传头像"
+        :src="require('@/assets/images/profile.jpg')"
+        class="img-circle img-lg"
+      />
     </div>
     <el-dialog
       :title="title"
@@ -90,7 +95,6 @@ import store from "@/store";
 import { VueCropper } from "vue-cropper";
 import { upload } from "@/api/upload";
 import { userEdit } from "@/api/system/user";
-import { setUser } from "@/utils/auth";
 
 export default {
   components: { VueCropper },
@@ -109,7 +113,7 @@ export default {
       title: "修改头像",
       imageName: "",
       options: {
-        img: store.getters.user.avatar, //裁剪图片的地址
+        img: store.getters.avatar, //裁剪图片的地址
         autoCrop: true, // 是否默认生成截图框
         autoCropWidth: 200, // 默认生成截图框宽度
         autoCropHeight: 200, // 默认生成截图框高度
@@ -161,6 +165,13 @@ export default {
     uploadImg() {
       this.$refs.cropper.getCropBlob((data) => {
         let formData = new FormData();
+
+        /**
+         * 使用vue-cropper插件进行图片切割头像，将切割后的头像转为blob文件上传，与后端对接的时候发现，blob的filename默认为‘blob’，导致后端接受数据的时候，无法根据上传图片的后缀名保存图片，全部为.blob文件，从而导致接口无法返回正确的url地址
+         * 解决：
+         * 在图片上传后，取file.name进行保存，然后在上传到服务器前将blob文件格式转为file文件并重新命名
+         */
+
         var fileOfBlob = new File([data], this.imageName);
         formData.append("file", fileOfBlob);
         upload(formData).then((response) => {
@@ -168,9 +179,8 @@ export default {
           this.options.img = "http://127.0.0.1:8080/" + response.data.filename;
           this.$message.success("上传成功");
           this.user.avatar = "http://127.0.0.1:8080/" + response.data.filename;
-          userEdit(this.user).then((res) => {
-            this.$message.success("修改成功");
-          });
+          store.commit("SET_AVATAR", this.options.img);
+          userEdit(this.user).then((res) => {});
           this.visible = false;
         });
       });

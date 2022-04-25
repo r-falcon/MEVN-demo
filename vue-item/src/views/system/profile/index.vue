@@ -51,7 +51,6 @@
 import userAvatar from "./userAvatar";
 import userInfo from "./userInfo";
 import { getUserInfo } from "@/api/system/user";
-import { getUser } from "@/utils/auth";
 
 export default {
   name: "Profile",
@@ -69,7 +68,7 @@ export default {
   },
   methods: {
     getUsers() {
-      getUserInfo({ id: JSON.parse(getUser())._id }).then((res) => {
+      getUserInfo({ id: localStorage.getItem("userId") }).then((res) => {
         this.user = res.data;
       });
     },
