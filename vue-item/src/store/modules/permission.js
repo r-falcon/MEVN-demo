@@ -149,6 +149,40 @@ const permission = {
                 },
               ],
             },
+            {
+              name: "Upload",
+              path: "/upload",
+              redirect: null,
+              component: "Layout",
+              meta: {
+                title: "文件管理",
+                icon: "tab",
+                roles: ["admin"],
+              },
+              children: [{
+                  name: "photo",
+                  path: "/upload/photo",
+                  redirect: null,
+                  component: "photo/index",
+                  hidden: false,
+                  meta: {
+                    title: "图片",
+                    icon: null,
+                  },
+                },
+                {
+                  name: "File",
+                  path: "/upload/file",
+                  redirect: null,
+                  component: "file/index",
+                  hidden: false,
+                  meta: {
+                    title: "文件",
+                    icon: null,
+                  },
+                },
+              ],
+            },
           ],
         };
         /**
@@ -165,7 +199,6 @@ const permission = {
         /**
          * 权限校验结束
          */
-        console.log(res.data);
         const accessedRoutes = filterAsyncRouter(res.data);
         accessedRoutes.push({
           path: "*",

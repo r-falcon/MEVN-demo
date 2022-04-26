@@ -12,7 +12,7 @@ const storage = multer.diskStorage({
   // 指定文件路径
   destination: function (req, file, cb) {
     // cb(null, dir)
-    cb(null, 'public/')
+    cb(null, 'public/imgs')
   },
   // 指定文件名 
   filename: function (req, file, cb) {
@@ -28,12 +28,16 @@ var createFolder = function (folder) {
   }
 }
 
-var uploadFolder = './public/'
+var uploadFolder = './public/imgs'
 createFolder(uploadFolder)
 
 const upload = multer({
   storage: storage
 })
+
+/**
+ * 上传图片
+ */
 
 router.post('/', upload.single('file'), (req, res) => {
   if (req.file === undefined) {
@@ -53,6 +57,7 @@ router.post('/', upload.single('file'), (req, res) => {
   //   // 检查文件类型
   //   return res.sendResult(null, 1, 'not accepted filetype')
   // }
+  req.file.filename = 'imgs/' + req.file.filename
   res.sendResult(req.file, 0, '上传成功')
 })
 

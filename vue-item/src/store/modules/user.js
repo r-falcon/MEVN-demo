@@ -8,9 +8,7 @@ import {
 import {
   getToken,
   setToken,
-  removeToken,
-  setUser,
-  removeUser,
+  removeToken
 } from "@/utils/auth";
 
 const user = {
@@ -50,8 +48,6 @@ const user = {
           .then((res) => {
             setToken(res.data.token);
             commit("SET_TOKEN", res.data.token);
-            // setUser(res.data.user);
-            // commit("SET_USER", JSON.stringify(res.data.user));
             localStorage.setItem("isAdmin", res.data.user.isAdmin);
             localStorage.setItem("userId", res.data.user._id)
             resolve();
@@ -69,14 +65,11 @@ const user = {
         getUserInfo({
           id: localStorage.getItem('userId')
         }).then(res => {
-          // setUser(res.data);
-          // commit("SET_USER", res.data);
           if (res.data.isAdmin) {
             commit("SET_ROLES", ["admin"]);
           } else {
             commit("SET_ROLES", ["normal"]);
           }
-          console.log(res.data);
           const avatar = res.data.avatar == "" ? require("@/assets/images/profile.jpg") : res.data.avatar
           commit('SET_AVATAR', avatar)
           resolve(res)
@@ -94,8 +87,6 @@ const user = {
         commit("SET_TOKEN", "");
         commit("SET_ROLES", []);
         removeToken();
-        // commit("SET_USER", {});
-        // removeUser();
         localStorage.clear();
         resolve();
       });
