@@ -133,15 +133,18 @@ export default {
     },
     // 上传成功回调
     handleUploadSuccess(res) {
+      console.log(res);
       this.uploadList.push({
         name: res.data.originalname,
         url: "http://127.0.0.1:8080/" + res.data.filename,
       });
       if (this.uploadList.length === this.number) {
+        console.log(this.fileList);
         this.fileList = this.fileList.concat(this.uploadList);
         this.uploadList = [];
         this.number = 0;
-        console.log("success", this.fileList);
+        console.log(this.fileList);
+        this.$emit("success", this.fileList);
         // this.$emit("input", this.listToString(this.fileList));
         // this.$modal.closeLoading();
       }

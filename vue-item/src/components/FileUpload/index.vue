@@ -168,8 +168,6 @@ export default {
     },
     // 上传失败
     handleUploadError(err) {
-      // this.$modal.msgError("上传图片失败，请重试");
-      // this.$modal.closeLoading();
       this.$message.error("上传图片失败，请重试");
     },
     // 上传成功回调
@@ -182,6 +180,7 @@ export default {
         this.fileList = this.fileList.concat(this.uploadList);
         this.uploadList = [];
         this.number = 0;
+        this.$emit("success", this.fileList);
         // this.$emit("input", this.listToString(this.fileList));
         // this.$modal.closeLoading();
       }
@@ -189,6 +188,7 @@ export default {
     // 删除文件
     handleDelete(index) {
       this.fileList.splice(index, 1);
+      this.$emit("delete", this.fileList);
       // this.$emit("input", this.listToString(this.fileList));
     },
     // 获取文件名称

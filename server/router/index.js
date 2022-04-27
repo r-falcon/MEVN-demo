@@ -18,6 +18,7 @@ const Astore = require('../models/analysis/Astore')
 const ATrans = require('../models/analysis/Atrans')
 const Category = require('../models/article/Category')
 const Content = require('../models/article/Content')
+const Single = require('../models/upload/Single')
 
 module.exports = {
   router,
@@ -33,4 +34,5 @@ module.exports = {
   ATrans,
   Category,
   Content,
+  Single
 }
