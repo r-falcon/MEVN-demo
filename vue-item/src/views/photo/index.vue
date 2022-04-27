@@ -84,6 +84,7 @@ export default {
           this.mid = res.data[0]._id;
         }
         this.multipleList = res.data[0].multipleList;
+        console.log(this.multipleList);
       });
     },
 

@@ -70,6 +70,8 @@ const upload = require('./router/upload')
 app.use('/upload', upload)
 const single = require('./router/upload/single')
 app.use('/single', single)
+const multiple = require('./router/upload/multiple')
+app.use('/multiple', multiple)
 
 // 设置静态目录
 app.use(express.static(path.join(__dirname, 'public')))

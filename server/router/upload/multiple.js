@@ -17,28 +17,29 @@ router.get('/multipleList', (req, res) => {
  */
 router.post('/multipleAdd', (req, res) => {
   var fileList = req.body.fileList
-
   Multiple.find().then((multiples) => {
-    console.log(multiples);
-    // if (multiples[0].multipleList.length == 0) {
     if (multiples.length == 0) {
-      console.log('====================================');
-      console.log(111, fileList);
-      console.log('====================================');
-      new Multiple({
-        $push: {
-          multipleList: fileList
-        }
-      }).save().then((newMultiple) => {
-        return res.sendResult(newMultiple, 0, '添加成功')
+      new Multiple().save().then((newMultiple) => {
+        Multiple.updateOne({
+          _id: newMultiple[0]._id
+        }, {
+          $push: {
+            multipleList: {
+              $each: fileList
+            }
+          }
+        }).then((newMultiples) => {
+          return res.sendResult(newMultiples, 0, '添加成功')
+        })
       })
     } else {
-      console.log(222);
       Multiple.updateOne({
         _id: multiples[0]._id
       }, {
-        $pushAll: {
-          multipleList: fileList
+        $push: {
+          multipleList: {
+            $each: fileList
+          }
         }
       }).then((newMultiple) => {
         return res.sendResult(newMultiple, 0, '修改成功')
