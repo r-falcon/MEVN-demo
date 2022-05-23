@@ -6,6 +6,8 @@ const cookieParser = require('cookie-parser')
 require('./db/connect')
 const path = require('path')
 const app = express()
+// 导入nodejs-websocket模块
+const ws = require('nodejs-websocket')
 
 // CORS设置跨域访问
 app.all('*', (req, res, next) => {
@@ -75,6 +77,36 @@ app.use('/multiple', multiple)
 
 // 设置静态目录
 app.use(express.static(path.join(__dirname, 'public')))
+
+// 执行websocket处理连接方法
+var server = ws.createServer(function (connection) {
+  // 处理客户端发送过来的消息
+  connection.on('text', function (data) {
+    console.log('接受到客户端消息：', data);
+    let jsonStr = JSON.stringify({ name: 'falcon', age: 20, sex: '女', height: 162 })
+    // 发送消息给客户端
+    connection.send(jsonStr)
+  })
+
+  // 监听关闭
+  connection.on('close', function (code, reason) {
+    console.log('connection closed');
+  })
+
+  // 监听异常
+  connection.on('error', () => {
+    console.log('服务异常关闭...');
+  })
+})
+
+server.listen(8001, (err) => {
+  if (err) {
+    console.log('websocket connect error');
+  } else {
+    console.log('websocket connected');
+  }
+})
+
 
 app.listen(8080, (err) => {
   if (err) {
